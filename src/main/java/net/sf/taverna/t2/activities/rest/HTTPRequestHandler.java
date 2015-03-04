@@ -415,9 +415,10 @@ private static final String CONTENT_TYPE_HEADER_NAME = "Content-Type";
 		BufferedReader reader = new BufferedReader(new InputStreamReader(entity
 				.getContent(), charset != null ? charset : "UTF-8"));
 
-		String str;
-		while ((str = reader.readLine()) != null) {
-			responseBodyString.append(str + "\n");
+		int ln;
+                char[] ch = new char[1024];
+		while ((ln = reader.read(ch)) >= 0) {
+			responseBodyString.append(ch, 0, ln);
 		}
 
 		return (responseBodyString.toString());
